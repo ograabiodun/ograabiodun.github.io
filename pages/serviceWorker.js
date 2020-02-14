@@ -1,7 +1,7 @@
 const cacheName = 'v1';
 const cacheFiles = [
     '/',
-    './index.html',
+    './Index.html',
     './pages/userBoard.html',
     './pages/adminBoard.html',    
     './pages/register.html',
