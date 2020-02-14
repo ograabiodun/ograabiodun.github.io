@@ -11,7 +11,7 @@ async function send() {
   //register service worker
   console.log("registering SW");
   const register = await navigator.serviceWorker.register(
-    "../pages/serviceWorker.js"
+    "../serviceWorker.js"
   );
   console.log("Service Worker Registered...");
 
