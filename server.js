@@ -64,7 +64,7 @@ app.use(session({
 
 //login page/ default page
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + '/Index.html');
+    res.sendFile(__dirname + '/index.html');
   
   });
 
