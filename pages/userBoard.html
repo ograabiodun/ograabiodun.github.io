@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="blue" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <title>User Page</title>
+</head>
+<body>
+    <div id="vueapp">   
+        <nav class="navi">
+            <ul >
+             <li><a  href="#">Logout</a></li>
+             <li><a class="active" href="/pages/userBoard">Dashboard</a></li>
+           </ul> 
+         </nav>
+         
+         <h1>THIS IS THE COURSES SCREEN</h1>
+        <section class="search-sec">
+            <div class="container">
+                <form action="#" method="post" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-12 p-0" >
+                                    <!-- <input type="text" class="form-control search-slt" placeholder="Enter Pickup City"> -->
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                    <input type="text" class="form-control search-slt" v-model="searchQuery" placeholder="Find Course Topic">
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                    <select class="form-control search-slt" id="exampleFormControlSelect1">
+                                        <option value="">Select Topic</option>
+                                        <option v-for='course in courses' value="">{{ course.topic }}</option>
+                                    </select>
+                                </div>
+                                <!-- <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                    <button type="button" class="btn btn-danger wrn-btn">Search</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <div class="row" style="width: 90%;margin: auto;padding: 20px;">
+            <div class="col-md-2 col-sm-6" v-for="course in resultQuery" >
+                <div class="product-grid">
+                    <div class="product-image">
+                        <a href="#">
+                            <img class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo9/images/img-1.jpg" style="height: 30%;width: 50%;">
+                        </a>
+                    </div>
+                    <span></span>
+                    <div class="product-content">
+                        <h3 class="title" >{{course.topic}}</h3>
+                        <div class="price">{{course.price}}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+<div class="row" style="margin: auto; width: 60%;">
+    <div class="col-md-8">
+        <form action="/addComments" method="POST">
+          <div class="form-group row">
+            <label for="text" class="col-12 col-form-label">Select A Topic </label> 
+            <div class="col-12">
+              <select id="text" name="topic" placeholder="Enter Title here" class="form-control here" >
+                <option value="">-- Topic --</option>
+                <option v-for="course in courses" v-bind:value="course.topic">
+                    {{course.topic }}
+                  </option>
+              </select>    
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="textarea" class="col-12 col-form-label">Comment</label> 
+            <div class="col-12">
+              <textarea id="textarea" name="comment" cols="40" rows="5" class="form-control"></textarea>
+            </div>
+            <div class="form-group row" id="rating" >
+                <label for="text" class="col-12 col-form-label">Rate this course</label>&nbsp;&nbsp;
+                <input type="radio" id="rate1" name="rating" value="1" > 1 </input>&nbsp; &nbsp;
+                <input type="radio" id="rate2" name="rating" value="2" > 2 </input>&nbsp;&nbsp;
+                <input type="radio" id="rate3" name="rating" value="3" > 3 </input>&nbsp;&nbsp;
+                <input type="radio" id="rate4" name="rating" value="4" > 4 </input>&nbsp;&nbsp;
+                <input type="radio" id="rate5" name="rating" value="5" > 5 </input>&nbsp;&nbsp;
+            </div>
+          </div> 
+          <button type="submit" class="btn btn-black" value="Save rating" v-on:click="saveRating(index)" style="margin: auto;width: auto;">Share</button>
+        </form>
+    </div>
+</div> <hr>
+        <div v-for="comment in comments" class="column" style="margin: auto; width: 70%;height: 50%;background-color: rgba(128, 128, 128, 0.74);">
+            <div class="media" >
+                <a  href="#">
+                  <img class="media-object" src="http://placekitten.com/150/150">
+                </a>
+            <div class="col-md-12">
+                <h1>{{ comment.topic }}</h1>
+                <p>{{ comment.comment }}</p>
+                Rating : {{ comment.rating }}
+            </div>
+            </div> <p></p>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+var searchQuery = null;
+
+    var courses, comments;
+     
+    var app = new Vue({
+        el: '#vueapp',
+        data:
+            {
+                message: 'hello Vue',
+                courses,
+                searchQuery,
+                comments
+            },
+        created() {
+                fetch('/allcourses').then((response) =>{
+                    return  response.json().then((courses) =>{
+                        this.courses = (courses);
+                    })
+                }),
+                fetch('/allcomments').then((response) =>{
+                    return  response.json().then((comments) =>{
+                        this.comments = (comments.reverse());
+                    })
+                })
+                
+            },
+            computed: {
+        resultQuery(){
+            
+            if(this.searchQuery){
+            return this.courses.filter((item)=>{
+                console.log(item);
+                return this.searchQuery.toLowerCase().split(' ').every(v => item.topic.toLowerCase().includes(v))
+            })
+            }else if(this.searchQuery == null){
+                return this.courses;
+            }
+
+            
+            }
+                }
+    });
+    
+</script>
+<style>
+    /*search box css start here*/
+.search-sec{
+    padding: 2rem;
+}
+.search-slt{
+    display: block;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #55595c;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    height: calc(3rem + 2px) !important;
+    border-radius:0;
+}
+.wrn-btn{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    height: calc(3rem + 2px) !important;
+    border-radius:0;
+}
+@media (min-width: 992px){
+    .search-sec{
+        position: relative;
+        /* top: -114px; */
+        background: rgba(26, 70, 104, 0.51);
+    }
+}
+
+@media (max-width: 992px){
+    .search-sec{
+        background: #1A4668;
+    }
+}
+
+.navi ul{
+	padding:0px;
+	margin:0px;
+	list-style-type:none;
+	overflow:hidden;
+	background-color:#333;
+	
+}
+.navi li{
+	float:left;
+}
+.navi li a{
+	display:block;
+	color:rgb(10, 10, 10);
+	  padding: 14px 16px;
+	  text-decoration:none;
+	  font-size:19px;
+}
+.navi li a:hover{
+	background-color: #f2f2f2;
+	color:#000;
+}
+.active{
+	color:#fff;
+	background-color:green;
+	
+}
+
+</style>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="blue" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <title>Admin Page</title>
+  </head>
+  <body>
+    <div id="searchFilter">
+      <nav class="navi">
+        <ul>
+          <li><a href="#">Logout</a></li>
+          <li><a class="active" href="/pages/adminBoard">Dashboard</a></li>
+        </ul>
+      </nav>
+      <h1>THIS IS THE ADMINISTRATION SCREEN</h1>
+      <!-- search -->
+      <!-- Search :
+      <input
+        v-model="searchQuery"
+        class="input"
+        type="text"
+        placeholder="Enter topic name"
+      /> -->
+
+      
+
+      <!--delete for the courses-->
+      <section class="search-sec">
+        <div class="container">
+            <form action="/delete" method="POST" >
+                <div class="row" class="course" id="deleteCourse">                    
+                    <div class="col-lg-12">
+                      <h3>Delete an Item</h3>
+                        <div class="column">                   
+                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                              <select name="topic" v-model="selectedCourse" placeholder="Select Topic" class="form-control search-slt" id="exampleFormControlSelect1">
+                                  <option value="">Select Topic</option>
+                                  <option v-for="course in courses" v-bind:value="course.topic">{{ course.topic }}</option>
+                              </select>
+                          </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                <input class="form-control search-slt" type="text" placeholder="Topic" name="topic" v-model="selectedCourse" required>
+                            </div>                            
+                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                <button type="submit" value="Delete " class="btn btn-danger wrn-btn">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+<br>
+    <section class="search-sec">
+      <div class="container">
+          <form action="/add" method="POST" >
+              <div class="row" class="course" id="newCourse">
+                  <div class="col-lg-12">
+                    <h3>Add new Item</h3>
+                      <div class="column">
+                          <div class="col-lg-3 col-md-3 col-sm-12 p-0" >
+                              <input type="text" class="form-control search-slt" placeholder="Topic" name="topic" required>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                              <input type="text" class="form-control search-slt" placeholder="location" name="location" required>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                            <input type="text" class="form-control search-slt" placeholder="price" name="price" required />
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                              <button type="submit" value="Add New" class="btn btn-success wrn-btn">Add Course</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </section>
+  <div class="col-lg-12">
+    <h3>Added courses :</h3>
+  </div>   
+      <div class="row" style="width: 90%;margin: auto;padding: 20px;margin: auto;">
+        <div class="col-md-2 col-sm-6" v-for="add in courses" >
+            <div class="product-grid" style="border-radius: 3px;border: grey 1px solid;">
+                <div class="product-image">
+                    <a href="#">
+                        <img class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo9/images/img-1.jpg" style="height: 30%;width: 100%;">
+                    </a>
+                </div>
+                <span></span>
+                <div class="product-content">
+                    <p class="title" >Topic : {{ add.topic }}</p>
+                    <p>Location : {{ add.location }}</p>
+                    <div class="price">Price : {{ add.price }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="search-sec">
+      <div class="container">
+          <form action="/update" method="POST" >
+              <div class="row" class="course" id="updateCourse">                    
+                  <div class="col-lg-12">
+                    <h3>Update Existing Item</h3>
+                      <div class="column">                   
+                          <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                            <input class="form-control search-slt" type="text" placeholder="Topic" name="topic" v-model="selectedCourse" required>
+                        </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                              <input class="form-control search-slt" type="text" placeholder="location" name="location" required>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                            <input class="form-control search-slt" type="text" placeholder="price" name="price" required>
+                        </div>                            
+                          <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                              <button type="submit" value="Update" class="btn btn-primary wrn-btn">Update</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </section>
+    </div>
+
+    <script>
+      var selectedCourse, courses, searchQuery;
+      var app = new Vue({
+        el: "#searchFilter",
+        data: {
+          message: "hello Vue",
+          selectedCourse,
+          courses,
+          searchQuery
+        },
+
+        created() {
+          fetch("/allcourses").then(response => {
+            return response.json().then(courses => {
+              this.courses = courses;
+            });
+          });
+          ("/add").then(response => {
+            return response.json().then(courses => {
+              this.courses = courses.reverse();
+            });
+          });
+        }
+      });
+    </script>
+    <style>
+      .navi ul {
+        padding: 0px;
+        margin: 0px;
+        list-style-type: none;
+        overflow: hidden;
+        background-color: #333;
+      }
+      .navi li {
+        float: left;
+      }
+      .navi li a {
+        display: block;
+        color: rgb(10, 10, 10);
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 19px;
+      }
+      .navi li a:hover {
+        background-color: #f2f2f2;
+        color: #000;
+      }
+      .active {
+        color: #fff;
+        background-color: green;
+      }
+    </style>
+  </body>
+</html>
