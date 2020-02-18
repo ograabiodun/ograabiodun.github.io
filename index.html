@@ -15,6 +15,7 @@
 </head>
 <body >
     
+    
     <div class="sidenav" >
         <div class="login-main-text">
            <h2>Application<br> Login Page</h2>
@@ -22,6 +23,7 @@
         </div>
      </div>
      <div class="main">
+        <button class="add-button">Add to home screen</button>
         <div class="col-md-6 col-sm-12">
            <div class="login-form">
               <form method="POST" action="/pages/userBoard">
@@ -119,6 +121,12 @@
 .btn-black{
     background-color: #000 !important;
     color: #fff;
+}
+
+.add-button {
+  position: absolute;
+  top: 1px;
+  left: 1px;
 }
     </style>
     <script src="/pages/app.js"></script>
