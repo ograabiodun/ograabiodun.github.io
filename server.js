@@ -199,7 +199,7 @@ app.get("/adminBoard", (req, res) => {
 
   //userBoard page
 app.get("/userBoard", (req, res) => {
-    res.sendFile(__dirname + '/pages/userBoard.html');
+    res.sendFile(__dirname + './pages/userBoard.html');
   
   });
 
