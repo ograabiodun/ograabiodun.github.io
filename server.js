@@ -150,6 +150,11 @@ app.get('/register', function(req, res) {
     res.sendFile(__dirname + '/pages/register.html') //create a index file 
   
   });
+  app.get('/userBoard', function(req, res) {
+
+    res.sendFile(__dirname + '/pages/userBoard.html') //create a index file 
+  
+  });
 
     ////user and Admin register 1
 app.post('/form_decision', (req, res) => {
