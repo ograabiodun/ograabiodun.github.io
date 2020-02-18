@@ -145,7 +145,7 @@ app.get("/allcomments", (req, res) => {
 
 
     /* GET HTML FILE */
-app.get('/pages/register', function(req, res) {
+app.get('/register', function(req, res) {
 
     res.sendFile(__dirname + '/pages/register.html') //create a index file 
   
@@ -174,10 +174,10 @@ app.post('/form_decision', (req, res) => {
   
   //user and Admin register 2
   if(u_usertype =='user')
-    res.redirect('/pages/userBoard');
+    res.redirect('/userBoard');
   
   else if (u_usertype=='provider')
-    res.redirect('/pages/adminBoard');
+    res.redirect('/adminBoard');
   });
 
 /* GET JSON */
@@ -192,13 +192,13 @@ app.get('/json', function(req, res) {
   });
 
   //adminBoard page
-app.get("/pages/adminBoard", (req, res) => {
+app.get("/adminBoard", (req, res) => {
     res.sendFile(__dirname + '/pages/adminBoard.html');
   
   });
 
   //userBoard page
-app.get("/pages/userBoard", (req, res) => {
+app.get("/userBoard", (req, res) => {
     res.sendFile(__dirname + '/pages/userBoard.html');
   
   });
@@ -241,10 +241,10 @@ app.get("/pages/userBoard", (req, res) => {
       
                 //redirect - admin and normal user
                 if (results[0].usertype == "provider"){
-                  res.redirect('/pages/adminBoard');
+                  res.redirect('/adminBoard');
                 }                
             else if (results[0].usertype == "user"){
-              res.redirect('/pages/userBoard');
+              res.redirect('/userBoard');
             }
                 
             //     else if (results[0].adminuser == true)
@@ -271,7 +271,7 @@ app.get("/pages/userBoard", (req, res) => {
       //res.sendStatus(200);
       });
 
-      app.post('/pages/userBoard', (req, res) => {
+      app.post('/userBoard', (req, res) => {
         console.log('Got ID:', req.body['_id']);
         console.log('Got Name:', req.body['name']);
     
@@ -286,7 +286,7 @@ app.get("/pages/userBoard", (req, res) => {
        if (err) return console.log(err)
     
        console.log('saved to database')
-       res.redirect('/pages/userBoard')
+       res.redirect('/userBoard')
     
      })
         //res.sendStatus(200);
@@ -306,7 +306,7 @@ app.post('/addComments', (req, res) => {
       if(err) return console.log(err)
       console.log('Courses commented')
   
-      res.redirect('/pages/userBoard');
+      res.redirect('/userBoard');
     })
    });
 
@@ -328,7 +328,7 @@ app.post('/update', (req, res) => {
       dbo2.collection("courses").updateOne(myquery, newvalues, function(err, res) {
         if (err) throw err;
         console.log("1 document updated");
-        res.redirect('/pages/adminBoard')
+        res.redirect('/adminBoard')
        });
     
     });
@@ -347,7 +347,7 @@ app.post('/delete', (req, res) => {
       dbo2.collection("courses").deleteOne(myquery, function(err, res) {
         if (err) throw err;
         console.log("1 course deleted");
-        res.redirect('/pages/adminBoard')
+        res.redirect('/adminBoard')
        });
     
     });
@@ -373,7 +373,7 @@ app.post('/delete', (req, res) => {
 
     // to see the first element
     res.json(result);
-    res.redirect('/pages/adminBoard');
+    res.redirect('/adminBoard');
 
     // 5 is the limit I've defined for number of uploaded files at once
     // 'multiple_images' is the name of our file input field
