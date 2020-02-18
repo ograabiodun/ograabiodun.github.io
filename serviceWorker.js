@@ -8,7 +8,7 @@ const cacheFiles = [
     './app.js',
     './manifest.webmanifest',
     '/server.js',
-    './serviceWorker.js',
+    '/serviceWorker.js',
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
     'https://cdn.jsdelivr.net/npm/vue@2.6.11',
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
